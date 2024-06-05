@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Grid, Button, Typography, TextField, Paper } from "@mui/material/"
 import axios from "axios";
 
@@ -9,13 +9,6 @@ const Game = () => {
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get('/api/points').then(response => {
-    //         setPoints(response.data.points);
-    //     }).catch(error => {
-    //         console.error(error);
-    //     })
-    // }, []);
 
     const handleBetAmountChange = (event) => {
         setBetAmount(event.target.value);
@@ -33,19 +26,6 @@ const Game = () => {
         setLoading(false);
     };
 
-    // const handleRollDice = () => {
-    //     setLoading(true);
-    //     axios.post('/api/roll-dice', { betAmount, betOption })
-    //         .then(response => {
-    //             setResult(response.data.result);
-    //             setPoints(response.data.points);
-    //             setLoading(false);
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //             setLoading(false);
-    //         });
-    // }
 
     return (
         <Paper
@@ -57,7 +37,7 @@ const Game = () => {
                 flexGrow: 1,
                 justifyItems: "center",
                 backgroundColor: (theme) =>
-                    theme.palette.mode === 'dark' ? '#212121' : '#fff',
+                    theme.palette.mode === 'dark' ? '#2121' : '#fff',
 
             }}
         >
@@ -107,16 +87,16 @@ const Game = () => {
                 </Grid>
                 {loading ? (
                     <Grid item xs={12}>
-                        <Typography variant="h6" align="center">Loading...</Typography>
+                        <Typography variant="h6">Loading...</Typography>
                     </Grid>
                 ) : (
                     result && (
                         <Grid item xs={12} border="solid" borderRadius={2} borderColor="#ce93d8" margin={4}>
-                            <Typography variant="h6" align="start" color="primary" fontWeight="bold" fontFamily="monospace">Die 1 : {result.die1}</Typography>
-                            <Typography variant="h6" align="start" color="primary" fontWeight="bold" fontFamily="monospace">Die 2 : {result.die2}</Typography>
-                            <Typography variant="h6" align="start" color="primary" fontWeight="bold" fontFamily="monospace">Total : {result.total}</Typography>
-                            <Typography variant="h6" align="start" color="primary" fontWeight="bold" fontFamily="monospace">Result: {result.win ? 'You win' : 'You Lost'}</Typography>
-                            <Typography variant="h6" align="start" color="primary" fontWeight="bold" fontFamily="monospace">Points Won/Lost: {result.pointsWon}</Typography>
+                            <Typography variant="h6" color="primary" fontWeight="bold" fontFamily="monospace">Die 1 : {result.die1}</Typography>
+                            <Typography variant="h6" color="primary" fontWeight="bold" fontFamily="monospace">Die 2 : {result.die2}</Typography>
+                            <Typography variant="h6" color="primary" fontWeight="bold" fontFamily="monospace">Total : {result.total}</Typography>
+                            <Typography variant="h6" color="primary" fontWeight="bold" fontFamily="monospace">Result: {result.win ? 'You win' : 'You Lost'}</Typography>
+                            <Typography variant="h6" color="primary" fontWeight="bold" fontFamily="monospace">Points Won/Lost: {result.pointsWon}</Typography>
                         </Grid>
 
                     )

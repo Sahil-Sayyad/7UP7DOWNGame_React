@@ -3,61 +3,50 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 8000;
 
-
 app.use(cors());
 app.use(express.json());
 
 let points = 5000;
-
+// here rolldice function generates random number.
 const rollDice = () => {
-    return Math.floor(Math.random() * 6) + 1;
+  return Math.floor(Math.random() * 6) + 1;
 };
 
+// here calculateResult function calculates result based on number generated.
 const calculateResult = (betAmount, betType) => {
-    const die1 = rollDice();
-    const die2 = rollDice();
-    const total = die1 + die2;
+  const die1 = rollDice();
+  const die2 = rollDice();
 
-    let result = { die1, die2, total, win: false, pointsWon: 0 };
+  const total = die1 + die2;
 
-    if ((betType === '7 up' && total > 7) || (betType === '7 down' && total < 7)) {
-        result.win = true;
-        result.pointsWon = betAmount * 2;
-    } else if (betType === '7' && total === 7) {
-        result.win = true;
-        result.pointsWon = betAmount * 5;
-    } else {
-        result.pointsWon = -betAmount;
-    }
+  let result = { die1, die2, total, win: false, pointsWon: 0 };
 
-    points += result.pointsWon;
-    result.points = points;
+  if (
+    (betType === "7 up" && total > 7) ||
+    (betType === "7 down" && total < 7)
+  ) {
+    result.win = true;
+    result.pointsWon = betAmount * 2;
+  } else if (betType === "7" && total === 7) {
+    result.win = true;
+    result.pointsWon = betAmount * 5;
+  } else {
+    result.pointsWon = -betAmount;
+  }
 
-    return result;
+  points += result.pointsWon;
+  result.points = points;
+
+  return result;
 };
 
+// API call for showing result on UI.
 app.post("/api/roll-dice", async (req, res) => {
   try {
     let { betAmount, betOption } = req.body;
 
     betAmount = parseInt(betAmount);
 
-    // if (!betAmount || !betOption) {
-    //   return res.status(400).json({ error: "Invalid request" });
-    // }
-    // const result =
-    //   Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1;
-
-    // let pointsDelta = 0;
-
-    // if (result < 7 && betOption === "7 down") {
-    //   pointsDelta = betAmount * 2;
-    // } else if (result > 7 && betOption === "7 up") {
-    //   pointsDelta = betAmount * 2;
-    // } else if (result === 7 && betOption === "7") {
-    //   pointsDelta = betAmount * 5;
-    // }
-    // points += pointsDelta;
     const result = calculateResult(betAmount, betOption);
 
     return res.json(result);
@@ -65,18 +54,6 @@ app.post("/api/roll-dice", async (req, res) => {
     console.log(error);
     return res.json(error);
   }
-});
-
-app.get("/api/points", async (req, res) => {
-  //   const token = req.headers.authorization.split(" ")[1];
-  //   jwt.verify(token, "secret", (err, decoded) => {
-  try {
-    return res.json({ points });
-  } catch (error) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  //   });
 });
 
 app.listen(port, (err) => {
