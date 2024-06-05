@@ -49,5 +49,6 @@
 ```
    - To see the frontend part you need to 'cd frontend' and then start 'npm run dev' to get the URL e.g. (http://localhost:5173/).
 ```
-[Demo Video](https://github.com/Sahil-Sayyad/Assignment_/assets/96423459/6f1aa748-f4a0-43a7-80ae-56c1d68457fd)
+
+[Demo Video](https://github.com/Sahil-Sayyad/7UP7DOWNGame_React/assets/96423459/a0d5c76f-715b-4548-b0b1-c647afd5cbc5)
 
